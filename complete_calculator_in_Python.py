@@ -82,5 +82,3 @@ try:
         print(f'You did √{param1} and it results in {squareroot(param1)}') 
 except (NameError, ValueError, ZeroDivisionError) as errc:
     print(f"There's something wrong with the 'Execution' sector: {errc}") 
-
-"""Guilherme Bracero Gonzales, 29/11/2021"""
