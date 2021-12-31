@@ -1,84 +1,74 @@
 # Imports
 from math import sqrt
-from colorama import (init, Fore, Back)
+from colorama import Fore
 
-# User Inputs
+# Code
 print(Fore.YELLOW + "Python", Fore.BLUE + "Calculator!", Fore.RESET)
 print()
 print("SIGN:")
 print()
 print("Choose one of the respective signs below to make a math operation:")
-print("1 - ' + ' \n2 - ' - ' \n3 - ' / ' \n4 - ' * ' \n5 - ' √ '")
+print("1 = ' + ' \n2 = ' - ' \n3 = ' / ' \n4 = ' * ' \n5 = ' √ '")
 
-try:
-    sign = int(input('Then, write his number here: '))
-    if sign > 5:
-        print('Please, return and input only 1, 2, 3, 4 or 5')
-        exit()
-except (ValueError) as erra:
-    print(f"There's something wrong with the 'User inputs' section: {erra}")
+# User Signal Input
+sign: int = 0
 
-print()
-print("PARAMETERS: ")
-print()
 
-try:
-    param1 = int(input('Insert the 1º parameter here: \n'))
-    if sign < 5:
-        param2 = int(input('And then the 2º parameter here: \n'))
-except (ValueError) as errb:
-    print(f"There's something wrong with the 'User inputs' section: {errb}")
+def signals():
+    global sign
+    try:
+        sign = int(input('Then, write his number here: '))
+        if sign > 5:
+            print('Please, return and input only 1, 2, 3, 4 or 5')
+            return signals()
+        return userinputs()
+    except ValueError as erra:
+        print(f"You may use only int numbers. {erra}")
+        return signals()
 
-print()
-print(Fore.BLUE + "Operation", Fore.YELLOW + "Result", Fore.RESET)
-print()
+
+param1: int = 0
+param2: int = 0
+
+
+# User Number input
+def userinputs() -> int:
+    global param1, param2
+    try:
+        param1 = int(input('\nInsert the 1º parameter here: \n'))
+        if sign < 5:
+            param2 = int(input('And the 2º here: \n'))
+            return True
+        return True
+    except ValueError as errb:
+        print(f"You may use only float numbers. {errb}")
+        return userinputs()
+
 
 # Execution
-try:
-    if sign == 1:
+def operation(p1: int, p2: int):
+    global sign
+    print("\nRESULT:\n")
+    try:
+        if sign == 1:
+            return print(f"{p1 + p2}")
+        elif sign == 2:
+            return print(f"{p1 - p2}")
+        elif sign == 3:
+            return print(f"{p1 // p2}")
+        elif sign == 4:
+            return print(f"{p1 * p2}")
+        else:
+            ret = sqrt(p1)
+            round(ret)
+            return print(f"~{ret}")
+
+    except (NameError, ValueError, ZeroDivisionError) as errc:
+        print(f"There's something wrong with the operation: {errc}")
+        return userinputs()
 
 
-        def sum(x, y):
-            """Returns the operation x + y"""
-            return (x + y)
-        
-    
-        print(f'You did {param1} + {param2} and it results in {sum(param1, param2)}')
-    elif sign == 2:
-        
-
-        def subtraction(x, y):
-            """Returns the operation x - y"""
-            return (x - y)
-
-
-        print(f'You did  {param1} - {param2} and it results in {subtraction(param1, param2)}')
-    elif sign == 3:
-
-    
-        def division(x, y):
-            """Returns the operation x / 1"""
-            return (x / y)
-
-
-        print(f'You did {param1} / {param2} and it results in {division(param1, param2)}')
-    elif sign == 4:
-
-
-        def multiplication(x, y):
-            """Returns the operation x * y"""
-            return (x * y)
-
-    
-        print(f'You did {param1} * {param2} and it results in {multiplication(param1, param2)}')
-    else:
-
-
-        def squareroot(x):
-            """Returns the squareroot of the parameter"""
-            return (sqrt(x))
-
-
-        print(f'You did √{param1} and it results in {squareroot(param1)}') 
-except (NameError, ValueError, ZeroDivisionError) as errc:
-    print(f"There's something wrong with the 'Execution' sector: {errc}") 
+# Exec
+if __name__ == '__main__':
+    signals()
+    operation(p1=param1, p2=param2)
